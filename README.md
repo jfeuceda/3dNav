@@ -1,6 +1,6 @@
-# 3dNav
+# 3dNav - 3D navigator for CAD-design 
 
-## 3D navigator for CAD design
+## description
 
 This is a work in process project for a 3D design navigator.
 
@@ -10,7 +10,7 @@ I shall configure it to be use on FreeCAD since it is the software I use the mos
 
 I have no previous experience coding so, if you can improve the code in any way feel free to let me know.
 
-Material list:
+## Material list:
 
 - Arduino Micro
 - MPU6050 Module
