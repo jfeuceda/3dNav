@@ -1,6 +1,6 @@
 # 3dNav - 3D navigator for CAD-design 
 
-## description
+## Description
 
 This is a work in process project for a 3D design navigator.
 
