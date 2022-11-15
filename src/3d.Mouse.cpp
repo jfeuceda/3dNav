@@ -13,8 +13,8 @@ const int calibration = 2;
 const int BUTTON = 8;
 const int NUM_LEDS = 4;
 const int DATA_PIN = 6;
+const int THRESHOLD = 5;
 int BRIGHTNESS =64;
-int THRESHOLD = 5;
 bool swState, swStatePrev = false;
 bool isPanning =false;
 
@@ -32,7 +32,7 @@ void setup()
 	Mouse.begin();											//iniciando Mouse
 	Keyboard.begin();										//iniciando Teclado
 	FastLED.addLeds<LED_TYPE, DATA_PIN>(leds, NUM_LEDS);
-    FastLED.setBrightness(BRIGHTNESS);
+	FastLED.setBrightness(BRIGHTNESS);
 	pinMode(BUTTON,INPUT_PULLUP);							//definiendo pin para boton como pullup
 	mpu.initialize();
 
