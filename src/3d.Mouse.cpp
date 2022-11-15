@@ -6,30 +6,27 @@
 #include <Keyboard.h>
 #include <FastLED.h>
 
-
-#define BUTTON		8
-#define NUM_LEDS	4
-#define DATA_PIN	6
-#define BRIGHTNESS	64
 #define LED_TYPE	WS2812B
-#define COLOR_ORDER GBR
+#define COLOR_ORDER	GBR
+
+const int calibration = 2;
+const int BUTTON = 8;
+const int NUM_LEDS = 4;
+const int DATA_PIN = 6;
+int BRIGHTNESS =64;
+int THRESHOLD = 5;
+bool swState, swStatePrev = false;
+bool isPanning =false;
 
 CRGB leds[NUM_LEDS];
 
-uint8_t max_bright = 128; 
-int THRESHOLD = 5;
-bool swState, swStatePrev = true;
-bool isPanning =false;
-const int calibration = 2;
-
 MPU6050 mpu;
-
 int16_t ax, ay, az, gx, gy, gz;
 int vx, vy, vz; 
 
 void setup() 
 {
-	delay(500);												//power-up safety delay 
+	delay(500);												//power-up safety delay 4
 	Serial.begin(9600);
 	Wire.begin();
 	Mouse.begin();											//iniciando Mouse
@@ -38,6 +35,7 @@ void setup()
     FastLED.setBrightness(BRIGHTNESS);
 	pinMode(BUTTON,INPUT_PULLUP);							//definiendo pin para boton como pullup
 	mpu.initialize();
+
 	if (!mpu.testConnection()) {
 		while (1);
     }
