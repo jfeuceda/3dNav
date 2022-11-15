@@ -22,6 +22,7 @@ CRGB leds[NUM_LEDS];
 
 MPU6050 mpu;
 int16_t ax, ay, az, gx, gy, gz;
+const int THRESHOLD = 5;
 int vx, vy, vz; 
 
 void setup() 
@@ -82,5 +83,4 @@ void loop()
 	}
 
 	delay(20);
-
 }
