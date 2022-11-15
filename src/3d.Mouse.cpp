@@ -9,35 +9,35 @@
 #define LED_TYPE	WS2812B
 #define COLOR_ORDER	GBR
 
-const int calibration = 2;
+const int CALIBRATION = 2;
 const int BUTTON = 8;
 const int NUM_LEDS = 4;
 const int DATA_PIN = 6;
 const int THRESHOLD = 5;
-int BRIGHTNESS =64;
+int BRIGHTNESS = 64;
 int vx, vy, vz; 
-int16_t ax, ay, az, gx, gy, gz;
-bool swState, swStatePrev = false;
+bool swState, swStatePrev = true;
 bool isPanning =false;
 
 CRGB leds[NUM_LEDS];
 
 MPU6050 mpu;
+int16_t ax, ay, az, gx, gy, gz;
 
 void setup() 
 {
-	delay(1000);											//power-up safety delay 4
 	Serial.begin(9600);
 	Wire.begin();
 	Mouse.begin();											//iniciando Mouse
 	Keyboard.begin();										//iniciando Teclado
-	FastLED.addLeds<LED_TYPE, DATA_PIN>(leds, NUM_LEDS);
-	FastLED.setBrightness(BRIGHTNESS);
 	pinMode(BUTTON,INPUT_PULLUP);							//definiendo pin para boton como pullup
 	mpu.initialize();
 	if (!mpu.testConnection()) {
 		while (1);
     }
+	delay(1000);											//power-up safety delay 4
+	FastLED.addLeds<LED_TYPE, DATA_PIN>(leds, NUM_LEDS);
+	FastLED.setBrightness(BRIGHTNESS);
 }
 
 void loop()
@@ -65,12 +65,15 @@ void loop()
 	if (vx > THRESHOLD || vx < - THRESHOLD) {
 		if(!isPanning) Keyboard.press(KEY_LEFT_SHIFT);
 		Mouse.press(MOUSE_MIDDLE);
-		Mouse.move(vx/calibration,0,0);
+		Mouse.move(vx/CALIBRATION,0,0);
 	}
 	if (vy > THRESHOLD || vy < - THRESHOLD) {
 		if(!isPanning) Keyboard.press(KEY_LEFT_SHIFT);
 		Mouse.press(MOUSE_MIDDLE);
-		Mouse.move(0,vy/calibration,0);
+		Mouse.move(0,vy/CALIBRATION,0);
+	}
+	if (vz > THRESHOLD || vz < - THRESHOLD) { Mouse.press(MOUSE_MIDDLE);
+		Mouse.move(0,0,vz/CALIBRATION);
 	}
 	if (vx <= THRESHOLD && vx >= -THRESHOLD && vy <= THRESHOLD && vy >= -THRESHOLD) {
 		Keyboard.releaseAll();
