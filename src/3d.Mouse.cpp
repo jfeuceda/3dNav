@@ -15,19 +15,18 @@ const int NUM_LEDS = 4;
 const int DATA_PIN = 6;
 const int THRESHOLD = 5;
 int BRIGHTNESS =64;
+int vx, vy, vz; 
+int16_t ax, ay, az, gx, gy, gz;
 bool swState, swStatePrev = false;
 bool isPanning =false;
 
 CRGB leds[NUM_LEDS];
 
 MPU6050 mpu;
-int16_t ax, ay, az, gx, gy, gz;
-const int THRESHOLD = 5;
-int vx, vy, vz; 
 
 void setup() 
 {
-	delay(500);												//power-up safety delay 4
+	delay(1000);											//power-up safety delay 4
 	Serial.begin(9600);
 	Wire.begin();
 	Mouse.begin();											//iniciando Mouse
@@ -36,7 +35,6 @@ void setup()
 	FastLED.setBrightness(BRIGHTNESS);
 	pinMode(BUTTON,INPUT_PULLUP);							//definiendo pin para boton como pullup
 	mpu.initialize();
-
 	if (!mpu.testConnection()) {
 		while (1);
     }
@@ -62,7 +60,6 @@ void loop()
 		fill_solid(leds, NUM_LEDS, CRGB::Blue);
 		FastLED.show();
 	}
-
 	swStatePrev = swState;
 
 	if (vx > THRESHOLD || vx < - THRESHOLD) {
@@ -70,17 +67,14 @@ void loop()
 		Mouse.press(MOUSE_MIDDLE);
 		Mouse.move(vx/calibration,0,0);
 	}
-
 	if (vy > THRESHOLD || vy < - THRESHOLD) {
 		if(!isPanning) Keyboard.press(KEY_LEFT_SHIFT);
 		Mouse.press(MOUSE_MIDDLE);
 		Mouse.move(0,vy/calibration,0);
 	}
-
 	if (vx <= THRESHOLD && vx >= -THRESHOLD && vy <= THRESHOLD && vy >= -THRESHOLD) {
 		Keyboard.releaseAll();
 		Mouse.release(MOUSE_MIDDLE);
 	}
-
 	delay(20);
 }
