@@ -41,7 +41,6 @@ void setup()
 }
 
 void loop()
-
 {
 	mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
@@ -72,7 +71,7 @@ void loop()
 		Mouse.press(MOUSE_MIDDLE);
 		Mouse.move(0,vy/CALIBRATION,0);
 	}
-	if (vz > THRESHOLD || vz < - THRESHOLD) { Mouse.press(MOUSE_MIDDLE);
+	if (vz > THRESHOLD || vz < - THRESHOLD) {
 		Mouse.move(0,0,vz/CALIBRATION);
 	}
 	if (vx <= THRESHOLD && vx >= -THRESHOLD && vy <= THRESHOLD && vy >= -THRESHOLD) {
